@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\title{Trabalho 1 - Teoria da Computação}
+\author{Gabriel Leal C. Amaral, Gustavo F. Olegário}
+\date{October 2016}
+
+\begin{document}
+\maketitle
+\section{Máquina 1a - Fita única}
+    \subsection{Enunciado da linguagem}
+        \text{L = \{w\#w / w \in{\mbox{\{a,b,c\}* }}\}}
+    \subsection{Descrição do algoritmo}
+        \begin{enumerate}
+        \item No estado inicial, se ler a entrada vazia, aceite a palavra. Caso contrário, vá para o próximo estado.
+        \item Marcar a posição lida com x caso seja a ou b.
+        \item Percorrer até o primeiro elemento após a cerquilha que seja diferente de x.
+        \item Caso esse elemento seja diferente do último marcado com x no lado esquerdo da cerquilha, rejeite. Caso contrário, marque com x e volte até o último elemento marcado no lado esquerdo da cerquilha. Se o elemento seguinte for x, aceite a palavra. Caso seja a ou b, vá para 2. Caso contrário, rejeite.
+        \end{enumerate}
+        \text{As imagens dos testes estão em /Imagens/1a}
+        \text{A codificação da máquina está em machines\_jflap}
+\section{Máquina 2a - Multifita}
+    \subsection{Enunciado da lingaguem}
+        \text{L = \{ ww / w \in{\mbox{\{0,1\}* }}\}}
+    \subsection{Descrição do algoritmo}
+        \begin{enumerate}
+        \item No estado inicial, existem três possibilidades. Se for uma 
+        palavra do alfabeto inicial, 0 ou 1, marca como lida com X ou Y, 
+        respectivamente. Caso contrário, segue a sequência de estados para
+        o estado final
+        \item Se no estado inicial, a máquina tiver lido 1 ou 0, a máquina
+        prosseguirá até encontrar uma palavra vazia.
+        \item Ao encontrar uma palavra vazia, irã retroceder até encontrar 1 ou 0.
+        \item Se encontrar um 1 ou 0, marcará como lido e irá retroceder até
+        encontrar uma palavra não lida. Quando achar que for lida, avança
+        uma casa a frente.
+        \item Caso tenha seguido o caminho para o estado final, para 
+        cada elemento já lido na fita 1, marcará com um símbolo diferente 
+        e escreverá o antigo símbolo na fita 2.
+        \item Por último, percorrerá a ambas as fitas até a extremidade 
+        esquerda, garantindo que as duas fitas tem a mesma palavra.
+        \text{As imagens dos testes estão em /Imagens/2a}
+        \end{enumerate}
+        \includegraphics[scale=0.3]{Maq2a}
+\section{Máquina 2b - Multifita}
+    \subsection{Enunciado da linguagem}
+        \text{L = \{ w$w^{R}$w / w \in{\mbox{\{a,b\}* }}\}}
+    \subsection{Descrição do algoritmo}
+        \begin{enumerate}
+        \item No estado inicial, se ler a entrada vazia, aceite a palavra. Caso contrário, vá para o próximo estado.
+        \item Copie cada entrada lida da fita 1 para a fita 2. Ao chegar na entrada vazia, volte uma posição à esquerda em ambos os cabeçotes.
+        \item Mova o cabeçote da fita 1 para esquerda. Mova o cabeçote da fita 2, 3 vezes para a esquerda.
+        \item Repita o passo anterior até o cabeçote 2 chegar à entrada vazia. Chegando na entrada vazia, mova o cabeçote das fitas 1 e 2 para a direita. Neste ponto, o cabeçote 1 aponta para o início da última string e o cabeçote dois para o começo da primeira.
+        \item Percorrer até o final da string analisada na fita 1. Caso as entradas sejam iguais, marcar com x ou y (a ou b). Caso contrário, rejeite. Continue até a entrada vazia.
+        \item Mova o cabeçote uma posição à esquerda na fita 1 (neste momento, o cabeçote da fita 1 irá apontar para o final da última string) e mantenha o cabeçote 2 onde está (neste ponto, ele está no começo da string reversa).
+        \item Percorra a fita 1 no sentido direita-esquerda e a fita 2 no sentido esquerda-direita. Caso as entradas sejam iguais, continue até atingir uma entrada a ou b na fita 1 (alertando que acabou a string). Atingindo esta marca, aceite a palavra.
+        \end{enumerate}
+        \text{As imagens dos testes estão em Imagens/2b}
+        \text{A codificação da máquina está em machines_jflap}
+\section{Máquina 3a - Blocos}
+    \subsection{Enunciado da linguagem}
+        \text{L = \{ $0^{2}^{n}$ / n \ge 0 \}}
+    \subsection{Descrição do algoritmo}
+    \begin{enumerate}
+        \item Inicialmente, verifica-se se a palavra é vazia ou não.
+        Se for, vai para o estado de rejeição. Caso contrário se for
+        um 0, escreve x e vai para o próximo estado.
+        \item No próximo estado, ficará procurando por 0 ou por palavra
+        vazia. Caso seja uma palavra vazia, significa que entrou num estado
+        de aceitação, então aceita. Se encontrar x apenas avança na fita
+        e se encontrar um 0 escreve x na fita e vai para o próximo estado.
+        \item Ficará nesse estado até encontrar um a palavra vazia ou 
+        um 0. Em caso de x, apenas avança na fita. Se encontrar uma palavra
+        vazia, retrocede na fita e troca de estado. Caso encontre um 0,
+        avança na fita e vai pro outro estado.
+        \item Se encontrar um 0, escreve x na fita e volta para o estado an
+        terior. Se encontrar um x, apenas avança na fita e caso encontre
+        uma palavra vazia significa que a palavra ao todo tem um número
+        diferente de $0^{2}^{n}$, então vai para o estado de rejeição.
+        \item Ficará voltando na fita, para cada x e 0 na fita. Quando
+        encontrar uma palavra vazia, avança e volta para o segundo 
+        estado da máquina
+        \text{As imagens dos testes estão em /Imagens/3a}
+    \end{enumerate}
+\section{Máquina 3b - Blocos}
+    \subsection{Enunciado da linguagem}
+        \text{L = \{ Um somador binário \}}
+    \subsection{Descrição do algoritmo}
+    \begin{enumerate}        
+        \item A máquina possui 4 fitas. Duas para os operandos, uma para 
+        o "carry" e uma quarta para o resultado. Inicialmente a máquina 
+        percorrerá as duas fitas com os operandos até chegar o fim. A
+        máquina aceita operandos com números de bits. Quando ela encontrar
+        a palavra vazia nos dois operandos, significa que chegou no fim das
+        duas, então muda de estado.        
+        \item A máquina compara a entrada de cada palavara dos operandos
+        e com a entrada do "carry" e escreve o resultado baseado nessa
+        entrada (usando um comportamento de um somador obviamente). O
+        cabeçote do "carry" está sempre no mesmo lugar, visto que não há
+        necessidade de mudá-lo. Quando a máquina encontrar a palavra vazia
+        nos dois operandos vai para o estado de aceitação. Por convenção,
+        ela sempre escreve o "carry" no bit mais significativo,
+        independentemente de qual valor estava no carry.
+        \text{As imagens dos testes estão em /Imagens/3b}
+    \end{enumerate}
+\end{document}
